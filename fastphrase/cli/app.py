@@ -1,5 +1,4 @@
 import argparse
-from concurrent.futures import ProcessPoolExecutor
 
 from fastphrase.__about__ import __project__, __version__
 from fastphrase.core.passphraser import Passphraser
@@ -86,13 +85,7 @@ class App:
         else:
             use_wordlists = available_wordlists
 
-        with ProcessPoolExecutor() as pool:
-            wordlists = list(
-                pool.map(
-                    WordList,
-                    [p for p in PathKeeper.get_wordlist_paths() if p.stem in use_wordlists],
-                ),
-            )
+        wordlists = [WordList(p) for p in PathKeeper.get_wordlist_paths() if p.stem in use_wordlists]
 
         generator = Passphraser(wordlists=wordlists, separator=separator)
 
