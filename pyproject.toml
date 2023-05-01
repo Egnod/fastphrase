@@ -20,6 +20,7 @@ version = { source = "file", path = "fastphrase/__about__.py" }
 [tool.pdm.dev-dependencies]
 lint = [
     "pre-commit==2.20.0",
+    "commitizen==3.1.1"
 ]
 
 [tool.pdm.build]
