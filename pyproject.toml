@@ -1,0 +1,124 @@
+[project]
+name = "fastphrase"
+description = "Fastphrase - passphrase generator by worldlists."
+authors = [
+    {name = "Alexander Lavrov", email = "admin@egnod.dev"},
+]
+dependencies = [
+]
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+dynamic = ["version"]
+
+[project.scripts]
+fastphrase = "fastphrase.__main__:start"
+
+[tool.pdm]
+version = { source = "file", path = "fastphrase/__about__.py" }
+
+[tool.pdm.dev-dependencies]
+lint = [
+    "pre-commit==2.20.0",
+]
+
+[tool.pdm.build]
+includes = ["data/**/*"]
+is-purelib = true
+
+[tool.interrogate]
+ignore-init-method = true
+ignore-init-module = true
+ignore-magic = false
+ignore-semiprivate = false
+ignore-private = false
+ignore-property-decorators = false
+ignore-module = true
+ignore-nested-functions = false
+ignore-nested-classes = true
+ignore-setters = false
+fail-under = 95
+exclude = ["setup.py", "docs", "build"]
+ignore-regex = ["^get$", "^mock_.*", ".*BaseClass.*"]
+verbose = 0
+quiet = false
+whitelist-regex = []
+color = true
+omit-covered-files = false
+
+[tool.black]
+line-length = 120
+include = '\.pyi?$'
+target-version = ['py311']
+exclude = '''
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+    | migrations
+  )
+)
+'''
+
+[tool.isort]
+known_first_party = "fastphrase"
+line_length = 120
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+use_parentheses = true
+
+[tool.pycln]
+all = true
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+no_site_packages = true
+strict_optional = false
+strict = true
+allow_subclassing_any = true
+allow_untyped_calls = true
+pretty = true
+show_error_codes = true
+implicit_reexport = true
+allow_untyped_decorators = true
+warn_return_any = false
+disable_error_code = ["valid-type", "call-arg"]
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.0.1"
+version_files = [
+    "fastphrase/__about__.py:__version__",
+]
+style = [
+    ["qmark", "fg:#ff9d00 bold"],
+    ["question", "bold"],
+    ["answer", "fg:#ff9d00 bold"],
+    ["pointer", "fg:#ff9d00 bold"],
+    ["highlighted", "fg:#ff9d00 bold"],
+    ["selected", "fg:#cc5454"],
+    ["separator", "fg:#cc5454"],
+    ["instruction", ""],
+    ["text", ""],
+    ["disabled", "fg:#858585 italic"]
+]
+
+[tool.flake8]
+max-line-length = 120
+max-complexity = 18
+select = ["B", "C", "E", "F", "W", "T4", "B9"]
+exclude = ["tests", "__init__.py"]
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
