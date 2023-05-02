@@ -96,7 +96,7 @@ disable_error_code = ["valid-type", "call-arg"]
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.0.3"
+version = "0.0.4"
 version_files = [
     "fastphrase/__about__.py:__version__",
 ]
