@@ -16,7 +16,7 @@ class PathKeeper:
         )
         paths = [Path(path) for path in env_paths.split(":")]
         paths.append(Path.home() / ".local" / "share")
-        paths.append(Path(__file__).parent.parent.parent / "data")
+        paths.append(Path(__file__).parent.parent / "data")
 
         return tuple([path / "dict" for path in paths if (path / "dict").exists()])
 

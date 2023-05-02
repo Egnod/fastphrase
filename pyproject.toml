@@ -24,7 +24,6 @@ lint = [
 ]
 
 [tool.pdm.build]
-includes = ["data/**/*"]
 is-purelib = true
 
 [tool.interrogate]
