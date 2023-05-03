@@ -20,7 +20,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip pdm
           pdm install --group :all --verbose
-          
+
           eval $(pdm venv activate)
       - name: Lint
         run: |
