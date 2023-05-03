@@ -49,7 +49,6 @@ omit-covered-files = false
 [tool.black]
 line-length = 120
 include = '\.pyi?$'
-target-version = ['py311']
 exclude = '''
 (
   /(
@@ -80,7 +79,6 @@ use_parentheses = true
 all = true
 
 [tool.mypy]
-python_version = "3.11"
 ignore_missing_imports = true
 no_site_packages = true
 strict_optional = false
