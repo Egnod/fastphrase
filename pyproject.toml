@@ -19,8 +19,9 @@ version = { source = "file", path = "fastphrase/__about__.py" }
 
 [tool.pdm.dev-dependencies]
 lint = [
-    "pre-commit==2.20.0",
-    "commitizen==3.1.1"
+    "pre-commit==3.7.1",
+    "commitizen==3.28.0",
+    "pyyaml==6.0.1"
 ]
 
 [tool.pdm.build]
@@ -108,7 +109,7 @@ disable_error_code = ["valid-type", "call-arg"]
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.0.13"
+version = "0.0.14"
 version_files = [
     "fastphrase/__about__.py:__version__",
 ]
