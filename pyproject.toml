@@ -6,7 +6,7 @@ authors = [
 ]
 dependencies = [
 ]
-requires-python = ">=3.9,<3.12"
+requires-python = ">=3.9,<=3.13"
 readme = "README.md"
 license = {text = "MIT"}
 dynamic = ["version"]
@@ -25,6 +25,9 @@ lint = [
 
 [tool.pdm.build]
 is-purelib = true
+
+[tool.bandit]
+exclude_dirs = ["tests"]
 
 [tool.interrogate]
 ignore-init-method = true
@@ -49,6 +52,7 @@ omit-covered-files = false
 [tool.black]
 line-length = 120
 include = '\.pyi?$'
+target-version = ['py312']
 exclude = '''
 (
   /(
@@ -75,10 +79,20 @@ multi_line_output = 3
 include_trailing_comma = true
 use_parentheses = true
 
+[tool.flake8]
+max-line-length = 120
+max-complexity = 18
+select = ["B", "C", "E", "F", "W", "T4", "B9"]
+exclude = ["tests/*", "*/migrations/*"]
+per-file-ignores = ["__init__.py:F401"]
+ignore = ["W503", "B907", "B902", "FNE005", "CCE001", "E711", "E731"]
+classmethod-decorators = ["classmethod", "validator"]
+
 [tool.pycln]
 all = true
 
 [tool.mypy]
+python_version = "3.12"
 ignore_missing_imports = true
 no_site_packages = true
 strict_optional = false
@@ -94,7 +108,7 @@ disable_error_code = ["valid-type", "call-arg"]
 
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "0.0.12"
+version = "0.0.13"
 version_files = [
     "fastphrase/__about__.py:__version__",
 ]
@@ -110,12 +124,6 @@ style = [
     ["text", ""],
     ["disabled", "fg:#858585 italic"]
 ]
-
-[tool.flake8]
-max-line-length = 120
-max-complexity = 18
-select = ["B", "C", "E", "F", "W", "T4", "B9"]
-exclude = ["tests", "__init__.py"]
 
 [build-system]
 requires = ["pdm-backend"]

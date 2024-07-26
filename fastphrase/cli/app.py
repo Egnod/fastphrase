@@ -69,7 +69,9 @@ class App:
         """Show wordlists names."""
         print("\n".join(p.stem for p in PathKeeper.get_wordlist_paths()))
 
-    def _root(self, count: int = 1, length: int = 5, separator: str = "-", wordlists_names: str = "") -> None:
+    def _root(  # noqa: CCR001
+        self, count: int = 1, length: int = 5, separator: str = "-", wordlists_names: str = ""
+    ) -> None:
         """Generate passphrase."""
 
         use_wordlists = set()
