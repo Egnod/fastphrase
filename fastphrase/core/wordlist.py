@@ -16,7 +16,7 @@ class WordList:
     path: Path | None = field(default=None)
     name: str | None = field(default=None)
     separator: str = field(default="\n")
-    words: tuple[Word, ...] = field(default_factory=tuple, repr=False)
+    words: tuple[Word | str, ...] = field(default_factory=tuple, repr=False)
     is_composite: bool = field(default=False)
 
     def __post_init__(self) -> None:
@@ -29,9 +29,7 @@ class WordList:
             words = set()
 
             for word in self.path.read_text().split(self.separator):
-                word = re.sub(r"^[0-9]+\t", "", word)
-
-                if word:
+                if word := re.sub(r"^[0-9]+\t", "", word):
                     words.add(word)
 
             object.__setattr__(self, "words", tuple(words))

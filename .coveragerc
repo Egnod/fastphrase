@@ -1,0 +1,2 @@
+[run]
+omit = __init__.py, __main__.py, __about__.py

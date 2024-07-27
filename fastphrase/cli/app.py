@@ -74,6 +74,10 @@ class App:
     ) -> None:
         """Generate passphrase."""
 
+        if count < 1 or length < 1:
+            print("Count and length must be greater than or equal to 1")
+            return None
+
         use_wordlists = set()
         available_wordlists = {p.stem for p in PathKeeper.get_wordlist_paths()}
 
@@ -91,5 +95,6 @@ class App:
 
         generator = Passphraser(wordlists=wordlists, separator=separator)
 
-        for phrase in generator.get_many(count=count, length=length):
-            print(phrase)
+        phrases = list(generator.get_many(count=count, length=length))
+
+        print("\n".join(phrases))

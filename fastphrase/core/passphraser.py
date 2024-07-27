@@ -3,8 +3,10 @@ from __future__ import annotations
 import random
 import typing as t
 
+from fastphrase.core.wordlist import Word
+
 if t.TYPE_CHECKING:
-    from fastphrase.core.wordlist import Word, WordList
+    from fastphrase.core.wordlist import WordList
 
 
 class Passphraser:
@@ -12,7 +14,7 @@ class Passphraser:
 
     DEFAULT_SEPARATOR = "-"
 
-    def __init__(self, wordlists: list[WordList], separator: str = DEFAULT_SEPARATOR):
+    def __init__(self, wordlists: list[WordList], separator: str = DEFAULT_SEPARATOR) -> None:
         self._words = self._get_words(wordlists)
         self._separator = separator
         self._words_count = len(self._words)
@@ -44,11 +46,10 @@ class Passphraser:
         Returns:
             str: passphrase
         """
-        words: list[Word] = []
+        if length < 1:
+            raise ValueError("Length must be greater than or equal to 1")
 
-        for word in self._get_random_words(length):
-            words.append(word)
-
+        words: list[Word] = list(self._get_random_words(length))
         return f"{self._separator}".join(words)
 
     def get_many(self, count: int, length: int) -> t.Iterator[str]:
@@ -65,6 +66,9 @@ class Passphraser:
             Iterator[t.Iterator[str]]: passphrase
         """
 
+        if count < 1 or length < 1:
+            raise ValueError("Count and length must be greater than or equal to 1")
+
         for _ in range(count):
             yield self.get_one(length=length)
 
@@ -79,7 +83,7 @@ class Passphraser:
         """
         wordlist = wordlists[0]
 
-        for wl in wordlists:
+        for wl in wordlists[1:]:
             wordlist += wl
 
-        return wordlist.words
+        return tuple(Word(word) for word in wordlist.words)

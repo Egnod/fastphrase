@@ -12,15 +12,28 @@ class PathKeeper:
     @cache
     def get_dict_paths(cls) -> tuple[Path, ...]:
         """get_dict_paths."""
-        env_paths = os.getenv(
-            "XDG_DATA_DIRS",
-            "/usr/local/share/:/usr/share/",
-        )
-        paths = [Path(path) for path in env_paths.split(":")]
-        paths.append(Path.home() / ".local" / "share")
+        env_paths = [
+            Path(path)
+            for path in os.getenv(
+                "XDG_DATA_DIRS",
+                "/usr/local/share/:/usr/share/",
+            ).split(":")
+        ]
+        env_paths.append(Path.home() / ".local" / "share")
+
+        paths = [
+            path
+            for path in env_paths
+            if (
+                path.is_dir()
+                and not path.is_symlink()
+                and (path / "dict").is_dir()
+                and [p for p in (path / "dict").iterdir() if Path(p).is_file()]
+            )
+        ]
         paths.append(Path(__file__).parent.parent / "data")
 
-        return tuple([path / "dict" for path in paths if (path / "dict").exists()])
+        return tuple(path / "dict" for path in paths if (path / "dict").exists())
 
     @classmethod
     @cache
